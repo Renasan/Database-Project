@@ -35,7 +35,7 @@ INSERT INTO `EMPLOYEE` (`Irs`,`FirstName`,`LastName`,`SSN`,`DrivingLicence`,`Cit
 (81568470,'Paulos', 'Aramis', '98561472', '54899854','Athens', 'Agapis', '21', '15945'),
 (86493170,'George', 'Theodoropoulos', '11115555', '22558877','Athens', 'Agapis', '22', '15945'),
 (81800200,'Koulis', 'Abraam', '13421864', '32146842','Athens', 'Agapis', '23', '15945'),
-(89189119,'Vassiliki', 'Tassopoulou', '54698732', '66555599', 'Athens', '', '24', '15945'),
+(89189119,'Vassiliki', 'Tassopoulou', '54698732', '66555599', 'Athens', '', '24', '15945'), 
 (85171900,'Maria', 'Papadaki', '5415167182', '66118155599', 'Thessaloniki', 'Tsimiski', '13', '13456'),
 (81765436, 'Aikaterini','Metallinou', '3572637031', '9721219820', 'Xanthi', 'Aggelwn','4', '91910'),
 (8456789, 'Irene','Telalh', '3573718031', '8199181716', 'Athens', 'Damaskinou','6', '17545'),
