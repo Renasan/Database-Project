@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `EMPLOYEE` (
   `StreetNumber` int(3) NOT NULL ,
   `PostalCode` int(5) NOT NULL ,
   PRIMARY KEY (`Irs`)
-)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
 
 
@@ -319,7 +319,7 @@ DROP TABLE IF EXISTS `WORKS`;
 
 CREATE TABLE IF NOT EXISTS `WORKS` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `StoreId` int(11) NOT NULL,
+  `StoreId` int(11),
   `Irs` int(11) NOT NULL,
   `StartDate` date NOT NULL,
   `FinishDate` date ,
@@ -432,12 +432,14 @@ DELIMITER //
 CREATE TRIGGER `TR_PAYMENT_ON_RENT_DELETE` BEFORE DELETE ON `RENTS`
 FOR EACH ROW
 	BEGIN 
-		DELETE FROM `PAYMENT` WHERE `PAYMENT`.`RentId` = `RENTS`.`RentId`;
+		DELETE FROM `PAYMENT` WHERE `PAYMENT`.`RentId` = `OLD`.`RentId`;
 	END
 //
 DELIMITER ;
 
 -- SECOND TRIGGER
+
+
 
 DROP TRIGGER IF EXISTS `TR_PAYMENT_ON_RENT_INSERT`;
 
@@ -446,11 +448,10 @@ DELIMITER //
 CREATE TRIGGER `TR_PAYMENT_ON_RENT_INSERT` AFTER INSERT ON `RENTS`
 FOR EACH ROW
 	BEGIN 
-		SELECT RentId 	INTO @RentId FROM NEW.RentId;
-		SELECT MAX(PaymentId) INTO @PaymentId FROM `PAYMENT`.`PaymentId`;
-		INSERT INTO `PAYMENT` (`PaymentId`,`PaymentAmount`,`PaymentMethod`,`RentId`) VALUES (@PaymentId, 0, 0, @RentId);
+		INSERT INTO `PAYMENT` (`PaymentAmount`,`PaymentMethod`,`RentId`) VALUES (0, 0, NEW.`RentId`);
 	END
 //
+DELIMITER ;
 
 DROP TRIGGER IF EXISTS `NEW_EMPLOYEE_INSERT_TRIGGER`;
 
@@ -459,10 +460,9 @@ DELIMITER //
 CREATE TRIGGER `NEW_EMPLOYEE_INSERT_TRIGGER` AFTER INSERT ON `EMPLOYEE`
 FOR EACH ROW
 	BEGIN 
-		SELECT Irs 	INTO @Irs FROM NEW.Irs;
-		SELECT MAX(id) INTO @id FROM `WORKS`.`id`;
-		INSERT INTO `WORKS` (`id`,`StoreId`,`Irs`,`StartDate`,`FinishDate`,`Position`) VALUES (@id, 'Unknown', @Irs, CURDATE(), NULL, 'Unknown');
+		INSERT INTO `WORKS` (`StoreId`,`Irs`,`StartDate`,`FinishDate`,`Position`) VALUES (NULL, NEW.`Irs`, CURDATE(), NULL, 'Unknown');
 	END
 //
-
+DELIMITER ;
+ 
 
