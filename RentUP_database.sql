@@ -482,7 +482,7 @@ DELIMITER //
 CREATE TRIGGER `NEW_EMPLOYEE_INSERT_TRIGGER` AFTER INSERT ON `EMPLOYEE`
 FOR EACH ROW
 	BEGIN 
-		INSERT INTO `WORKS` (`StoreId`,`Irs`,`StartDate`,`FinishDate`,`Position`) VALUES ('Unknown', NEW.`Irs`, CURDATE(), NULL, 'Unknown');
+		INSERT INTO `WORKS` (`StoreId`,`Irs`,`StartDate`,`FinishDate`,`Position`) VALUES (1, NEW.`Irs`, CURDATE(), NULL, 'Unknown');
 	END
 //
 DELIMITER ;
